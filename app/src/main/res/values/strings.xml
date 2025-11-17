@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SimpleAndroidMTP</string>
+    <string name="request_connect_usb_device">USBデバイスを接続してください</string>
 </resources>
