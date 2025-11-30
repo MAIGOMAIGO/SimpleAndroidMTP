@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
     private val usbManager by lazy {
         getSystemService(Context.USB_SERVICE) as UsbManager
     }
-    private lateinit var permissionIntent: PendingIntent
 
     // usb用intent受信用
     private val usbReceiver = object : BroadcastReceiver() {
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                 ACTION_USB_PERMISSION -> {
                     synchronized(this) {
                         val device: UsbDevice? = intent.toUsbDevice()
-                        if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
+                        if (usbManager.hasPermission(device)) {
                             device?.let {
                                 Log.d(TAG, "Permission granted for device. Starting MTP.")
                                 usbViewModel.startMtpDevice(it)
@@ -87,10 +86,6 @@ class MainActivity : AppCompatActivity() {
      * usbレシーバーセットアップ
      */
     private fun setupUsbReceiver() {
-        permissionIntent = PendingIntent.getBroadcast(
-            this, 0, Intent(ACTION_USB_PERMISSION), PendingIntent.FLAG_IMMUTABLE
-        )
-
         // フィルター用意
         val filter = IntentFilter().apply {
             addAction(ACTION_USB_PERMISSION)
@@ -123,6 +118,12 @@ class MainActivity : AppCompatActivity() {
      * usbDeviceの個別なパーミッションを取得
      */
     fun requestUsbPermission(device: UsbDevice) {
+        val intent = Intent(ACTION_USB_PERMISSION).apply {
+            putExtra(UsbManager.EXTRA_DEVICE, device)
+        }
+        val permissionIntent = PendingIntent.getBroadcast(
+            this, device.deviceId, intent, PendingIntent.FLAG_IMMUTABLE
+        )
         usbManager.requestPermission(device, permissionIntent)
     }
 
