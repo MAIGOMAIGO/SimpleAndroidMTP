@@ -37,28 +37,10 @@ class UsbViewModel : ViewModel() {
     }
 
     /**
-     * MTPデバイスとの接続を開始する
+     * 接続したMTPデバイスの設置
      */
-    fun startMtpDevice(usbDevice: UsbDevice) {
-        val mtpDevice = MtpDevice(usbDevice)
-        val usbConnection = usbManager?.openDevice(usbDevice)
-        if (usbConnection == null) {
-            // TODO: 接続失敗時のエラーハンドリング
-        } else {
-            if (mtpDevice.open(usbConnection)) {
-                _connectedDevice.value = mtpDevice
-            } else {
-                // TODO: 接続失敗時のエラーハンドリング
-            }
-        }
-    }
-
-    /**
-     * 接続済みデバイスの情報をクリアする。
-     * 画面遷移の完了後に呼び出すことで、意図しない再遷移を防ぐ。
-     */
-    fun clearConnectedDevice() {
-        _connectedDevice.value = null
+    fun setConnectedMtpDevice(device: MtpDevice?) {
+        _connectedDevice.value = device
     }
 
     /**

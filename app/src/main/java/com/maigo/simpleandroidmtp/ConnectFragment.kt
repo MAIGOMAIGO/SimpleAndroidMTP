@@ -57,13 +57,6 @@ class ConnectFragment : Fragment() {
         // 接続状態を監視
         usbViewModel.connectedDevice.observe(viewLifecycleOwner) { device ->
             if (device != null) {
-                /*
-                 * 接続に成功したらControlFragmentへ遷移
-                 * 遷移後にこのFragmentに戻ってきたときに再度遷移しないように、
-                 * ViewModelの接続済みデバイス情報をクリアする
-                 */
-                usbViewModel.clearConnectedDevice()
-
                 val action = ConnectFragmentDirections.actionConnectFragmentToControlFragment(device.deviceId)
                 findNavController().navigate(action)
             }

@@ -7,9 +7,11 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.hardware.usb.UsbDevice
 import android.hardware.usb.UsbManager
+import android.mtp.MtpDevice
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.maigo.simpleandroidmtp.databinding.ActivityMainBinding
@@ -41,7 +43,7 @@ class MainActivity : AppCompatActivity() {
                         if (usbManager.hasPermission(device)) {
                             device?.let {
                                 Log.d(TAG, "Permission granted for device. Starting MTP.")
-                                usbViewModel.startMtpDevice(it)
+                                startMtpDevice(it)
                             }
                         } else {
                             Log.d(TAG, "Permission denied for device $device")
@@ -74,6 +76,7 @@ class MainActivity : AppCompatActivity() {
 
         setupUsbReceiver()
         checkForConnectedDevices()
+        usbViewModel.setUsbManager(usbManager)
     }
 
     override fun onDestroy() {
@@ -110,7 +113,7 @@ class MainActivity : AppCompatActivity() {
 
         // パーミッション済みのデバイスがあれば接続試行
         deviceList.find { usbManager.hasPermission(it) }?.let {
-            usbViewModel.startMtpDevice(it)
+            startMtpDevice(it)
         }
     }
 
@@ -125,6 +128,23 @@ class MainActivity : AppCompatActivity() {
             this, device.deviceId, intent, PendingIntent.FLAG_IMMUTABLE
         )
         usbManager.requestPermission(device, permissionIntent)
+    }
+
+    /**
+     * MTPデバイスとの接続を開始する
+     */
+    fun startMtpDevice(usbDevice: UsbDevice) {
+        val mtpDevice = MtpDevice(usbDevice)
+        val usbConnection = usbManager.openDevice(usbDevice)
+        if (usbConnection == null) {
+            Toast.makeText(this, "Failed to open USB connection", Toast.LENGTH_SHORT).show()
+        } else {
+            if (mtpDevice.open(usbConnection)) {
+                usbViewModel.setConnectedMtpDevice(mtpDevice)
+            } else {
+               Toast.makeText(this, "Failed to open MTP device", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     /**
