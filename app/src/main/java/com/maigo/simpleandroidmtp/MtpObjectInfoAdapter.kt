@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.maigo.simpleandroidmtp.databinding.ListItemFileBinding
 
-class MtpObjectIfoAdapter(
+class MtpObjectInfoAdapter(
     private val onItemClick: (MtpObjectInfo) -> Unit
-) : ListAdapter<MtpObjectInfo, MtpObjectIfoAdapter.MtpObjectInfoViewHolder>(MtpObjectInfoDiffCallback()) {
+) : ListAdapter<MtpObjectInfo, MtpObjectInfoAdapter.MtpObjectInfoViewHolder>(MtpObjectInfoDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MtpObjectInfoViewHolder {
         val binding = ListItemFileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MtpObjectInfoViewHolder(binding)

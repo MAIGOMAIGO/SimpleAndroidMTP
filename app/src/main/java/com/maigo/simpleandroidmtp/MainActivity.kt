@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Failed to open USB connection", Toast.LENGTH_SHORT).show()
         } else {
             if (mtpDevice.open(usbConnection)) {
-                usbViewModel.setConnectedMtpDevice(mtpDevice)
+                usbViewModel.deviceConnected(mtpDevice)
             } else {
                Toast.makeText(this, "Failed to open MTP device", Toast.LENGTH_SHORT).show()
             }
