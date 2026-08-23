@@ -2,4 +2,36 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Light Theme Colors -->
+    <color name="primary_light">#006D3B</color>
+    <color name="on_primary_light">#FFFFFF</color>
+    <color name="primary_container_light">#8FF7AC</color>
+    <color name="on_primary_container_light">#00210E</color>
+
+    <color name="secondary_light">#4E6354</color>
+    <color name="on_secondary_light">#FFFFFF</color>
+    <color name="secondary_container_light">#D1E8D5</color>
+    <color name="on_secondary_container_light">#0B1F13</color>
+
+    <color name="tertiary_light">#3B6470</color>
+    <color name="on_tertiary_light">#FFFFFF</color>
+    <color name="tertiary_container_light">#BEEAF7</color>
+    <color name="on_tertiary_container_light">#001F26</color>
+
+    <!-- Dark Theme Colors -->
+    <color name="primary_dark">#74DA96</color>
+    <color name="on_primary_dark">#00391C</color>
+    <color name="primary_container_dark">#00522B</color>
+    <color name="on_primary_container_dark">#8FF7AC</color>
+
+    <color name="secondary_dark">#B5CCBA</color>
+    <color name="on_secondary_dark">#213527</color>
+    <color name="secondary_container_dark">#374B3D</color>
+    <color name="on_secondary_container_dark">#D1E8D5</color>
+
+    <color name="tertiary_dark">#A2CEDC</color>
+    <color name="on_tertiary_dark">#043541</color>
+    <color name="tertiary_container_dark">#224C58</color>
+    <color name="on_tertiary_container_dark">#BEEAF7</color>
 </resources>
